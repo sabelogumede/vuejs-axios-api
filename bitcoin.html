@@ -1,0 +1,65 @@
+<html lang="en">
+
+<head>
+    <!-- Load Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- Load Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- Load script file.  'defer' loads after body is generated -->
+    <script src="vue_bitcoin.js" defer></script>
+
+    <style>
+        body {
+            background: rgb(130, 165, 130);
+            /* padding: 10px auto !important; */
+            margin: 0;
+        }
+        #app{
+            background: rgb(78, 60, 36);
+            padding: 20px 50px;
+            color: rgb(190, 211, 151);
+            max-width: 300px;
+            margin: 20px auto;
+        }
+        #app h1 {
+            color: #fff;
+        }
+        .currency {
+            padding: 2px 0;
+            font-size: 18px;
+        }
+        .lighten {
+            color: #fff;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <!-- Div where Vue runs -->
+    <div id="app">
+        <h1>Bitcoin Price Index</h1>
+
+        <section v-if="errored">
+            <p>We're sorry, we're not able to retrieve this information at the moment,</p>
+        </section>
+
+        <section v-else>
+            <div v-if="loading">loading...</div>
+
+            <div v-else v-for="currency in info" class="currency">
+                {{ currency.description }}
+                <span class="lighten">
+                    <span v-html="currency.symbol"></span>
+                    {{ currency.rate_float | currencydecimal }}
+                </span>
+            </div>
+
+        </section>
+
+    </div>
+</body>
+
+</html>
